@@ -4,13 +4,13 @@ My Project 3 at the Metis Data Science Bootcamp (February 2021). The goal was to
 
 ## Files
 
-- `Project 3 Notebook.ipynb`: the original 2021 notebook, with the SQL I used and all of the results.
+- `Project 3 Notebook.ipynb`: the original 2021 notebook, with example SQL and all of the results.
 - `Project 3 Presentation.pdf` (and `.pptx`): slides remade in October 2026, using only the results in the notebook.
 - `charts/tag_counts_2021.png`: the tag count chart from the notebook.
 
 ## Data
 
-Stack Overflow's public data dump, as the 2010 SQL Server database from [brentozar.com](https://www.brentozar.com/archive/2015/10/how-to-download-the-stack-overflow-database-via-bittorrent/). In SQL Server I removed commas and angle brackets from the titles and tags, deleted posts with no title and exported the posts to CSV. Then in pandas:
+Stack Overflow's public data dump, as the 2010 SQL Server database from [brentozar.com](https://www.brentozar.com/archive/2015/10/how-to-download-the-stack-overflow-database-via-bittorrent/). In SQL Server I removed commas from the titles and tags and the angle brackets around the tags, deleted posts with no title and exported the posts to CSV. Then in pandas:
 
 | Step | Rows |
 |---|---:|
@@ -46,20 +46,20 @@ I tuned LinearSVC with a grid search over C (1, 10, 100 and 1,000) and 100-fold 
 
 ## What worked and what didn't
 
-Tags named after a specific tool did best: json 89% recall, git 87%, eclipse 83%, django 80%. Broad tags did worst, and 11 tags were never predicted correctly, including oop, class, file and math. The most common languages also scored low: c# 31%, c++ 23% and c 10%.
+Tags named after a specific tool did best: json 89% recall, git 87%, eclipse 83%, django 80%. Most of the 11 tags that were never predicted correctly are broad topics, such as oop, class, file and math. Two of the six most common tags also scored low, c# at 31% and c++ at 23%, and c scored 10%.
 
 Part of the reason for that last group, which I found in 2026: the punctuation cleanup kept a tag name only if it was written in lower case. A title with "C#" or "C++" lost the symbols and became "C", and the TF-IDF settings ignore one-letter words, so for those titles the model never saw the language name.
 
 ## What I would change
 
 - Use the question body as well as the title.
-- Fix the cleanup above, and make stop-word removal ignore case.
+- Fix the cleanup above, keep one-letter words such as c, and make stop-word removal ignore case.
 - Tune a separate cutoff for each tag, to trade some precision for recall.
 - Use newer data. This database ends in 2010, and the score and view filters keep only popular questions.
 
 ## Running it
 
-Download the 2010 database from the link above and attach it in SQL Server. Run the SQL in the notebook to clean the posts and export a CSV; the notebook reads it from `C:\data_project3\CSVfile.csv`. Then run the notebook from the top. It imports pandas, NumPy, SciPy, NLTK, scikit-learn, matplotlib, seaborn, pyarrow, Dask and Beautiful Soup.
+Download the 2010 database from the link above and attach it in SQL Server. The notebook has example SQL for cleaning the posts and exporting them. The CSV it reads (`C:\data_project3\CSVfile.csv`) had the Title, Tags, Score and ViewCount columns for 1,000,000 posts, so change the example SELECT to include Score and ViewCount and that many rows. Then run the notebook from the top. It imports pandas, NumPy, SciPy, NLTK, scikit-learn, matplotlib, seaborn, pyarrow, Dask and Beautiful Soup.
 
 ## AI use
 
