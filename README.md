@@ -29,26 +29,26 @@ Each model ran one-vs-rest, so it made 100 yes or no calls for every title. The 
 
 | Model | Jaccard score | Hamming loss |
 |---|---:|---:|
-| PassiveAggressive | 48.50 | 1.19% |
-| LinearSVC | 47.76 | 1.02% |
-| Random forest (three runs) | 45.78 to 45.94 | 1.07 to 1.08% |
-| SGD | 45.73 | 1.02% |
-| Decision tree | 43.11 | 1.41% |
-| Perceptron | 42.68 | 1.70% |
-| Logistic regression | 41.09 | 1.09% |
-| k-nearest neighbors | 24.22 | 1.42% |
-| Multinomial naive Bayes | 23.17 | 1.35% |
-| Dummy (random guesses) | 2.57 | 3.14% |
+| PassiveAggressive | 48.50 | 1.186% |
+| LinearSVC | 47.76 | 1.018% |
+| Random forest (three runs) | 45.78 to 45.94 | 1.073 to 1.076% |
+| SGD | 45.73 | 1.023% |
+| Decision tree | 43.11 | 1.411% |
+| Perceptron | 42.68 | 1.699% |
+| Logistic regression | 41.09 | 1.093% |
+| k-nearest neighbors | 24.22 | 1.424% |
+| Multinomial naive Bayes | 23.17 | 1.351% |
+| Dummy (random guesses) | 2.57 | 3.141% |
 
 The code labels the three random forests 10, 100 and 1,000 trees, but all three were set to 1,000.
 
-I tuned LinearSVC with a grid search over C (1, 10, 100 and 1,000) and 100-fold cross-validation. The best value was C = 1, the default, so the final scores stayed at 47.76 and 1.02%. Going by the per-tag confusion matrices, the tags it predicted were right 85.5% of the time, and it found 46.0% of the tags the test questions actually had.
+I tuned LinearSVC with a grid search over C (1, 10, 100 and 1,000) and 100-fold cross-validation. The best value was C = 1, the default, so the final scores stayed at 47.76 and 1.018%. Going by the per-tag confusion matrices, the tags it predicted were right 85.5% of the time, and it found 46.0% of the tags the test questions actually had.
 
 ## What worked and what didn't
 
 Tags named after a specific tool did best: json 89% recall, git 87%, eclipse 83%, django 80%. Most of the 11 tags that were never predicted correctly are broad topics, such as oop, class, file and math. Two of the six most common tags also scored low, c# at 31% and c++ at 23%, and c scored 10%.
 
-Part of the reason for that last group, which I found in 2026: the punctuation cleanup kept a tag name only if it was written in lower case. A title with "C#" or "C++" lost the symbols and became "C", and the TF-IDF settings ignore one-letter words, so for those titles the model never saw the language name.
+In 2026 I found part of the reason for that last group. The punctuation cleanup kept a tag name only if it was written in lower case. A title with "C#" or "C++" lost the symbols and became "C", and the TF-IDF settings ignore one-letter words, so for those titles the model never saw the language name.
 
 ## What I would change
 
