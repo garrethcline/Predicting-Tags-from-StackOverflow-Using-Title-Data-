@@ -46,9 +46,9 @@ I tuned LinearSVC with a grid search over C (1, 10, 100 and 1,000) and 100-fold 
 
 ## What worked and what didn't
 
-Tags named after a specific tool did best: json 89% recall, git 87%, eclipse 83%, django 80%. Most of the 11 tags that were never predicted correctly are broad topics, such as oop, class, file and math. Two of the six most common tags also scored low, c# at 31% and c++ at 23%, and c scored 10%.
+Tags named after a specific tool did best: json 89% recall, git 87%, eclipse 83%, django 80%. Most of the 11 tags that were never predicted correctly are broad topics, such as oop, class, file and math. Three of the six most common tags also scored low, c# at 31%, .net at 25% and c++ at 23%, and c scored 10%.
 
-In 2026 I found part of the reason for that last group. The punctuation cleanup kept a tag name only if it was written in lower case. A title with "C#" or "C++" lost the symbols and became "C", and the TF-IDF settings ignore one-letter words, so for those titles the model never saw the language name.
+In 2026 I found part of the reason for the low c#, c++ and c scores. The punctuation cleanup kept a tag name only if it was written in lower case. A title with "C#" or "C++" lost the symbols and became "C", and the TF-IDF settings ignore one-letter words, so for those titles the model never saw the language name.
 
 ## What I would change
 
